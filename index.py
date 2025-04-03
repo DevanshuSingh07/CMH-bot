@@ -25,34 +25,23 @@ index = None
 website_texts = None
 
 def load_models():
-    """Lazy load models when first needed."""
+    """Lazy load models only when needed and avoid reloading"""
     global llm, embedding_model, index, website_texts
 
     if llm is None:
-        print("🔹 Loading LLM model...")
         llm = ChatGroq(model_name="llama-3.3-70b-versatile", api_key=GROQ_API_KEY, temperature=1)
 
     if embedding_model is None:
-        print("🔹 Loading Embedding model...")
         embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
-    if index is None:
-        print("🔹 Loading FAISS index...")
-        try:
-            index = faiss.read_index("faiss_index.index")
-        except Exception as e:
-            print(f"❌ Error loading FAISS index: {e}")
-            raise RuntimeError("FAISS index loading failed.")
+    if index is None and os.path.exists("faiss_index.index"):
+        index = faiss.read_index("faiss_index.index")
 
-    if website_texts is None:
-        print("🔹 Loading website data...")
-        try:
-            with open("website_data.json", "r", encoding="utf-8") as f:
-                website_texts = json.load(f)
-        except Exception as e:
-            print(f"❌ Error loading website data: {e}")
-            raise RuntimeError("Website data loading failed.")
+    if website_texts is None and os.path.exists("website_data.json"):
+        with open("website_data.json", "r", encoding="utf-8") as f:
+            website_texts = json.load(f)
 
+            
 def create_app():
     """Creates Flask app for Gunicorn compatibility."""
     app = Flask(__name__)
