@@ -9,83 +9,106 @@ from langchain_groq import ChatGroq
 from langchain_huggingface import HuggingFaceEmbeddings
 
 # Load environment variables
-load_dotenv()
-
-# Flask App Initialization
-app = Flask(__name__)
-CORS(app)
+dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
+load_dotenv(dotenv_path)
 
 # Secure API Key Retrieval
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-if not GROQ_API_KEY:
-    raise ValueError("Missing GROQ_API_KEY in environment variables")
 
-# Initialize LLM lazily (only when first used)
+if not GROQ_API_KEY:
+    raise RuntimeError("Missing GROQ_API_KEY in environment variables.")
+
+# Lazy-loaded models
 llm = None
 embedding_model = None
 index = None
 website_texts = None
 
 def load_models():
-    """Lazy load models only when needed."""
+    """Lazy load models when first needed."""
     global llm, embedding_model, index, website_texts
+
     if llm is None:
+        print("🔹 Loading LLM model...")
         llm = ChatGroq(model_name="llama-3.3-70b-versatile", api_key=GROQ_API_KEY, temperature=1)
+
     if embedding_model is None:
+        print("🔹 Loading Embedding model...")
         embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+
     if index is None:
-        index = faiss.read_index("faiss_index.index")
+        print("🔹 Loading FAISS index...")
+        try:
+            index = faiss.read_index("faiss_index.index")
+        except Exception as e:
+            print(f"❌ Error loading FAISS index: {e}")
+            raise RuntimeError("FAISS index loading failed.")
+
     if website_texts is None:
-        with open("website_data.json", "r", encoding="utf-8") as f:
-            website_texts = json.load(f)
+        print("🔹 Loading website data...")
+        try:
+            with open("website_data.json", "r", encoding="utf-8") as f:
+                website_texts = json.load(f)
+        except Exception as e:
+            print(f"❌ Error loading website data: {e}")
+            raise RuntimeError("Website data loading failed.")
 
-@app.route("/test", methods=["GET"])
-def test():
-    return jsonify({"message": "Server is running"}), 200
+def create_app():
+    """Creates Flask app for Gunicorn compatibility."""
+    app = Flask(__name__)
+    CORS(app)
 
-@app.route("/chat", methods=["POST"])
-def chat():
-    """Handle user queries with optimized response generation."""
-    try:
-        data = request.get_json()
-        user_query = data.get("query", "").strip()
+    @app.route("/test", methods=["GET"])
+    def test():
+        return jsonify({"message": "Server is running"}), 200
 
-        if not user_query:
-            return jsonify({"error": "Query is required"}), 400
+    @app.route("/chat", methods=["POST"])
+    def chat():
+        """Handles user queries and generates responses."""
+        try:
+            data = request.get_json()
+            user_query = data.get("query", "").strip()
 
-        # Load models if not already loaded
-        load_models()
+            if not user_query:
+                return jsonify({"error": "Query is required"}), 400
 
-        # Convert query to embedding
-        user_embedding = np.array(embedding_model.embed_query(user_query)).reshape(1, -1)
+            # Load models if not already loaded
+            load_models()
 
-        # Find closest match in index
-        _, idx = index.search(user_embedding, 1)
-        matched_text = website_texts[idx[0][0]]
+            # Convert query to embedding
+            user_embedding = np.array(embedding_model.embed_query(user_query)).reshape(1, -1)
 
-        # Create final prompt
-        final_prompt = f"""
-        User Query: {user_query}
-        Relevant Website Content: {matched_text}
-        
-        Provide a **concise response** (max 50 words). Be **short and precise**.
-        """
+            # Find closest match in index
+            _, idx = index.search(user_embedding, 1)
+            matched_text = website_texts[idx[0][0]]
 
-        # Get response from Llama3
-        response = llm.invoke(final_prompt, max_tokens=100)
+            # Create final prompt
+            final_prompt = f"""
+            User Query: {user_query}
+            Relevant Website Content: {matched_text}
+            Provide a **concise response** (max 50 words). Be **short and precise**.
+            """
 
-        response_text = response.content if hasattr(response, "content") else str(response)
+            # Get response from Llama3
+            response = llm.invoke(final_prompt, max_tokens=100)
 
-        return jsonify({
-            "query": user_query,
-            "relevant_content": matched_text,
-            "response": response_text
-        })
+            response_text = response.content if hasattr(response, "content") else str(response)
 
-    except Exception as e:
-        import traceback
-        print(traceback.format_exc())  # Log full error
-        return jsonify({"error": f"Internal Server Error: {str(e)}"}), 500
+            return jsonify({
+                "query": user_query,
+                "relevant_content": matched_text,
+                "response": response_text
+            })
+
+        except Exception as e:
+            import traceback
+            print(traceback.format_exc())  # Log full error
+            return jsonify({"error": f"Internal Server Error: {str(e)}"}), 500
+
+    return app
+
+# Gunicorn entry point
+app = create_app()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False)
