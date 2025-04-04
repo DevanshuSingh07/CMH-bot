@@ -1,0 +1,132 @@
+{
+    "faqs": [
+      {
+        "category": "Form 1A Certificate",
+        "questions": [
+          {
+            "question": "How long does it take to get a Form 1A certificate?",
+            "answer": "After your application is complete, it usually takes a few hours. If you already have eye and ear test reports, it usually takes less time.",
+            "tags": ["form 1a", "driving license", "time", "duration"]
+          },
+          {
+            "question": "Is the Form 1A accepted at all RTOs?",
+            "answer": "Yes, provided it is signed by a registered medical practitioner.",
+            "tags": ["form 1a", "RTO", "acceptance"]
+          },
+          {
+            "question": "what are the charges?",
+            "answer": "Our price starts from 599/- for digital certificate, without eye and ear test, price range will depend on the certificate format",
+            "tags": ["medical certificate","price", "time", "delivery", "fast"]
+          }
+        ]
+      },
+      {
+        "category": "Sick Leave Certificate",
+        "questions": [
+          {
+            "question": "Can I get a sick leave certificate without visiting a doctor in person?",
+            "answer": "Yes, we provide virtual consultations with certified doctors, and you can receive your sick leave certificate online after the consultation.",
+            "tags": ["sick leave", "online", "consultation", "certificate"]
+          },
+          {
+            "question": "what are the charges?",
+            "answer": "Our price starts from 599/- for digital certificate, price range will depend on the certificate format",
+            "tags": ["medical certificate","price", "time", "delivery", "fast"]
+          }
+        ]
+      },
+      {
+        "category": "Doctor consultation",
+        "questions": [
+          {
+            "question": "how can i get doctor consultation?",
+            "answer": "Yes, we provide virtual consultations with certified doctors, and you can receive your sick leave certificate online after the consultation.",
+            "tags": ["sick leave", "online", "consultation", "certificate"]
+          }
+        ]
+      },
+      {
+        "category": "Fitness Certificate",
+        "questions": [
+          {
+            "question": "What is a fitness certificate and who can issue it?",
+            "answer": "A fitness certificate is a document issued by a registered medical practitioner to certify that an individual is physically fit for work, sports, or other activities.",
+            "tags": ["fitness", "doctor", "certificate", "health"]
+          },
+          {
+            "question": "requirments for fitness certificate?",
+            "answer": "your Bp, pulse, heart rate, and a 15 second walking video is required for fitness certificate",
+            "tags": ["fitness", "doctor", "certificate", "health"]
+          }
+        ]
+      },
+      {
+        "category": "General",
+        "questions": [
+          {
+            "question": "How quickly can I get my medical certificate?",
+            "answer": "You can get your certificate within 30 minutes of consultation, depending on the type of certificate and medical evaluation required.",
+            "tags": ["medical certificate", "time", "delivery", "fast"]
+          },
+          {
+            "question": "what is the price of medical certificate?",
+            "answer": "Our price starts from 599/- for digital certificate, price range will depend on the certificate format",
+            "tags": ["medical certificate","price", "time", "delivery", "fast"]
+          },
+          {
+            "question": "Is my personal data safe?",
+            "answer": "Yes, your data is encrypted and stored securely. We follow Indian IT laws including SPDI Rules for data protection.",
+            "tags": ["privacy", "data", "security", "encryption"]
+          },
+          {
+            "question": "How to apply?",
+            "answer": "link",
+            "tags": ["medical certificate","price", "time", "delivery", "fast"]
+          },
+          {
+            "question": "contact information?",
+            "answer": "call on +91 7061905266 or email at info@certifymyhealth.com",
+            "tags": ["medical certificate","contact"]
+          },
+          {
+            "question": "how long does a consultation take?",
+            "answer": "after you application is submitted, it usually takes 10-15 minutes for doctor consultation, depending on doctor's availiblity",
+            "tags": ["medical certificate","price", "time", "delivery", "fast"]
+          },
+          {
+            "question": "is certificate valid?",
+            "answer": "yes, all are certificate are made according to the NMC guideline and are valid globally",
+            "tags": ["medical certificate","price", "time", "delivery", "fast"]
+          }
+          
+        ]
+      },
+      {
+        "category":"refund and cancellation",
+        "questions":[
+          {
+            "question":"Cases, when your eligible for a refund",
+            "answer":"If the user requests a refund before being contacted by the customer representative team.If the doctor rejects the case due to unmet user demands before initiating consultation, and no contact has been made with the user.When proper medical history or current medical records of the ailment are unavailable and communicated to the team before doctor consultation.Complaints deemed invalid by our health team. When a certificate is required for insurance claims regularization or duty regularization for government employees.",
+            "tags":["refund and cancilation"]
+          },
+          {
+            "question":"Cases, where user is not entitled for a refund",
+            "answer":"A non-refundable product has been chosen by the user. The user is unwilling to attend the Doctor consultation A standalone online Doctor consultation has been booked.The user is submitting a certificate for a medico-legal case User has filled the wrong Form and is looking for International certificate or any another product.The certificate has already been issued.The user's ailment claims are found to be incorrect or illegal.The user contradicts their own medical condition regarding the details provided in the form and during the doctor consultation, resulting in rejection by the doctor.If our medical team discovers that the information provided by the user is inaccurate or a fake certificate is requested.The user attends a Doctor consultation and subsequently wishes to cancel their order.The user fails to respond to any calls or emails from the support team for more than 14 days after booking their order.",
+            "tags":["refund and cancilation"]
+          },
+          {
+            "question":"important details for refund and cencilation",
+            "answer":"For Indian Medical Certificates, a refundable document format incurs a charge of INR 150/-. Non-refundable document formats do not qualify for refunds. For International Medical Certificates, a refundable document format incurs a charge of $7. Non-refundable document formats do not qualify for a refunds. For Form 1A Certificates, a refundable document format incurs a charge of INR 250/-. Non-refundable document formats do not qualify for refunds. No refunds or edits are made to non-refundable services. After the refund is processed, the amount will reflect in your account within 7-10 business days.",
+            "tags":["refund and cancilation","important information"]
+          },
+          {
+            "question":"what are the prices",
+            "answer":"₹599 - Digital Certificate on Whatsapp (Non-Refundable),₹799 - Digital Certificate with prescription on Whatsapp (Non-Refundable), ₹899 - Handwritten Certificate on Whatsapp (Preferred by Colleges/Universities), ₹1099 - Handwritten Certificate with prescription on Whatsapp (Bestseller), ₹1199 - Handwritten Certificate on Whatsapp with shipping,₹1399 - Handwritten Certificate with prescription on Whatsapp with shipping",
+            "tags":["price breakdown"]
+          }
+        ]
+      }
+      
+    ]
+  }
+  
